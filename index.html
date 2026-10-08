@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fulltime | Live scores for UK sports fans</title>
+<meta name="description" content="fulltime is a live scores app in development for sports fans in the UK. Football, cricket, tennis, Formula 1 and golf in one place.">
+<meta property="og:title" content="fulltime | Live scores for UK sports fans">
+<meta property="og:description" content="Football, cricket, tennis, Formula 1 and golf in one app. In development for iOS and Android.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2a0b3c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%232a0b3c'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Narrow,Arial,sans-serif' font-weight='900' font-size='34' fill='%23f6d9de'%3EFT%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2a0b3c;
+    --paper: #f6d9de;
+    --paper-light: #fbecef;
+    --rule: rgba(42, 11, 60, .24);
+    --rule-on-ink: rgba(246, 217, 222, .28);
+    --live: #ff3b5c;
+    --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+    --text: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --gutter: clamp(20px, 5vw, 56px);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--text);
+    font-stretch: 100%;
+    font-size: 1.125rem;
+    line-height: 1.55;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+
+  .wrap { max-width: 1120px; margin-inline: auto; padding-inline: var(--gutter); }
+  .band { padding-block: clamp(56px, 9vw, 112px); }
+  .band-light { background: var(--paper-light); }
+  .band-ink { background: var(--ink); color: var(--paper); }
+
+  h1, h2, .wordmark, .clock-time, .term, .tier, .when, .mail {
+    font-family: var(--display);
+    font-stretch: 62%;
+  }
+  h1, h2 { margin: 0; text-wrap: balance; }
+  h2 {
+    font-weight: 800;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    line-height: .96;
+    max-width: 18ch;
+  }
+  p { margin: 0; }
+  .intro { max-width: 58ch; margin-top: 20px; }
+
+  /* Hero */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-block: 24px;
+  }
+  .wordmark {
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .topbar-link { font-weight: 600; text-underline-offset: 4px; }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: end;
+    padding-block: clamp(40px, 8vw, 104px) clamp(56px, 9vw, 112px);
+  }
+  h1 {
+    font-weight: 900;
+    font-size: clamp(3.5rem, 9.5vw, 8rem);
+    line-height: .9;
+    letter-spacing: -.01em;
+  }
+  .lede {
+    max-width: 36ch;
+    margin-top: 28px;
+    font-size: clamp(1.125rem, 1.6vw, 1.3125rem);
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 24px;
+    margin-top: 32px;
+  }
+  .btn {
+    display: inline-block;
+    padding: .75em 1.4em;
+    border-radius: 4px;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .btn:hover { background: #fff; }
+  .status { font-weight: 500; }
+
+  .clock { justify-self: end; text-align: right; }
+  .clock-time {
+    display: block;
+    font-weight: 900;
+    font-size: clamp(5.5rem, 17vw, 13rem);
+    line-height: .82;
+    letter-spacing: -.02em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .clock-state {
+    display: inline-flex;
+    align-items: center;
+    gap: .55em;
+    margin-top: 18px;
+    font-weight: 600;
+  }
+  .dot {
+    width: .6em;
+    height: .6em;
+    border-radius: 50%;
+    background: var(--paper);
+    opacity: .55;
+  }
+  .clock[data-state="live"] .dot { background: var(--live); opacity: 1; }
+
+  /* The five sports */
+  .board {
+    list-style: none;
+    margin: clamp(32px, 5vw, 56px) 0 0;
+    padding: 0;
+    border-top: 3px solid var(--ink);
+  }
+  .board li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr) minmax(0, 2fr);
+    gap: 4px 32px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .board li.own {
+    margin-inline: -20px;
+    padding-inline: 20px;
+    background: var(--ink);
+    color: var(--paper);
+    border-bottom-color: transparent;
+  }
+  .sport { font-weight: 600; }
+  .term {
+    font-weight: 800;
+    font-size: clamp(2rem, 4.2vw, 3.25rem);
+    line-height: 1;
+  }
+
+  /* Football */
+  .football-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: start;
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+  .pyramid { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .pyramid li {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    width: var(--w);
+    padding: 11px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .pyramid li.below {
+    background: transparent;
+    color: var(--ink);
+    box-shadow: inset 0 0 0 2px var(--ink);
+  }
+  .tier {
+    flex: none;
+    min-width: 1.4ch;
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .coverage { margin: 0; border-top: 3px solid var(--ink); }
+  .coverage div { padding: 16px 0; border-bottom: 1px solid var(--rule); }
+  .coverage dt { font-weight: 700; }
+  .coverage dd { margin: 2px 0 0; }
+
+  /* Progress */
+  .steps {
+    list-style: none;
+    margin: clamp(32px, 5vw, 56px) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+  .steps li { padding-top: 16px; border-top: 3px solid var(--rule); }
+  .steps li.current { border-top-color: var(--ink); }
+  .when {
+    display: flex;
+    align-items: center;
+    gap: .35em;
+    margin-bottom: 8px;
+    font-weight: 800;
+    font-size: 2.25rem;
+    line-height: 1;
+  }
+  .when .dot { width: .3em; height: .3em; background: var(--live); opacity: 1; }
+
+  /* Contact and footer */
+  .mail {
+    display: inline-block;
+    margin-top: 24px;
+    font-weight: 800;
+    font-size: clamp(1.9rem, 5.5vw, 3.75rem);
+    line-height: 1;
+    overflow-wrap: anywhere;
+    text-underline-offset: .12em;
+    text-decoration-thickness: 3px;
+  }
+  .small {
+    margin-top: clamp(48px, 7vw, 88px);
+    padding-top: 20px;
+    border-top: 1px solid var(--rule-on-ink);
+    font-size: .9375rem;
+    max-width: 70ch;
+  }
+  .small p + p { margin-top: 8px; }
+
+  @media (max-width: 760px) {
+    .hero-grid, .football-grid { grid-template-columns: minmax(0, 1fr); }
+    .clock { justify-self: start; text-align: left; }
+    .board li { grid-template-columns: minmax(0, 1fr); }
+    .steps { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  }
+  @media (max-width: 520px) {
+    .pyramid li { width: calc(var(--w) * .5 + 50%); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .clock[data-state="live"] .dot { animation: pulse 1s ease-in-out infinite; }
+    .clock[data-settled] .clock-time { animation: settle .45s cubic-bezier(.2, .9, .3, 1.2); transform-origin: right bottom; }
+    @keyframes pulse { 50% { opacity: .25; } }
+    @keyframes settle { from { transform: scale(1.12); } to { transform: scale(1); } }
+  }
+</style>
+</head>
+<body>
+
+<header class="band-ink hero">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="wordmark" href="#top" id="top">fulltime</a>
+      <a class="topbar-link" href="#contact">Contact</a>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <h1>Live scores, all the way to full time.</h1>
+        <p class="lede">fulltime is a live scores app for sports fans in the UK. Football, cricket, tennis, Formula 1 and golf, in one place.</p>
+        <div class="hero-actions">
+          <!-- REPLACE the address below with your own once the domain is set up -->
+          <a class="btn" href="mailto:hello@your-domain.com">Email us</a>
+          <span class="status">In development for iOS and Android.</span>
+        </div>
+      </div>
+
+      <div class="clock" data-state="ft" aria-hidden="true">
+        <span class="clock-time">FT</span>
+        <span class="clock-state"><span class="dot"></span><span class="clock-label">Full time</span></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!--
+    SCREENSHOTS: when you have 2 or 3 screenshots of the app, add a section here.
+    Example:
+    <section class="band band-light"><div class="wrap">
+      <h2>Inside the app</h2>
+      <img src="screenshot-1.png" alt="The fulltime home screen" width="390" height="844">
+    </div></section>
+  -->
+
+  <section class="band" aria-labelledby="sports">
+    <div class="wrap">
+      <h2 id="sports">Every sport has its own word for finished.</h2>
+      <p class="intro">fulltime is built around five sports. It will show the score while it is happening, and the result as soon as it is final.</p>
+
+      <ul class="board">
+        <li class="own">
+          <span class="sport">Football</span>
+          <span class="term">Full time</span>
+          <span class="gloss">The final whistle, after 90 minutes and stoppage time.</span>
+        </li>
+        <li>
+          <span class="sport">Cricket</span>
+          <span class="term">Stumps</span>
+          <span class="gloss">The end of a day's play.</span>
+        </li>
+        <li>
+          <span class="sport">Tennis</span>
+          <span class="term">Game, set and match</span>
+          <span class="gloss">The umpire's call when the last point is won.</span>
+        </li>
+        <li>
+          <span class="sport">Formula 1</span>
+          <span class="term">Chequered flag</span>
+          <span class="gloss">Waved when the winner crosses the line.</span>
+        </li>
+        <li>
+          <span class="sport">Golf</span>
+          <span class="term">In the clubhouse</span>
+          <span class="gloss">A player who has finished the round.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band band-light" aria-labelledby="football">
+    <div class="wrap">
+      <h2 id="football">Football, all the way down the pyramid.</h2>
+      <p class="intro">Football is the heart of fulltime. We are building it to follow every level of the English game, not only the top.</p>
+
+      <div class="football-grid">
+        <ol class="pyramid" aria-label="Levels of English football covered">
+          <li style="--w:52%"><span class="tier">1</span><span>Premier League</span></li>
+          <li style="--w:62%"><span class="tier">2</span><span>Championship</span></li>
+          <li style="--w:72%"><span class="tier">3</span><span>League One</span></li>
+          <li style="--w:82%"><span class="tier">4</span><span>League Two</span></li>
+          <li style="--w:92%"><span class="tier">5</span><span>National League</span></li>
+          <li style="--w:100%" class="below"><span class="tier">6+</span><span>National League North and South, and the regional leagues below</span></li>
+        </ol>
+
+        <dl class="coverage">
+          <div>
+            <dt>Women's Super League</dt>
+            <dd>The top level of women's football in England.</dd>
+          </div>
+          <div>
+            <dt>Top divisions around the world</dt>
+            <dd>The first division of every footballing country.</dd>
+          </div>
+          <div>
+            <dt>National teams</dt>
+            <dd>The major international tournaments.</dd>
+          </div>
+          <div>
+            <dt>Club history</dt>
+            <dd>Results, league finishes, goals and players, back to the season each club was founded.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="progress">
+    <div class="wrap">
+      <h2 id="progress">Where we are</h2>
+      <ol class="steps">
+        <li class="current">
+          <div class="when"><span class="dot"></span>Now</div>
+          <p>Design and core screens. The app runs in test builds on iOS and Android and shows real past results.</p>
+        </li>
+        <li>
+          <div class="when">Next</div>
+          <p>Live data. Scores, tables and fixtures that update in real time.</p>
+        </li>
+        <li>
+          <div class="when">Later</div>
+          <p>Public release in the UK.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer class="band band-ink" id="contact">
+  <div class="wrap">
+    <h2>Get in touch</h2>
+    <p class="intro">Questions, feedback or ideas for working together? Write to us.</p>
+    <!-- REPLACE the address below (both the link and the text) with your own -->
+    <a class="mail" href="mailto:hello@your-domain.com">hello@your-domain.com</a>
+
+    <div class="small">
+      <p>fulltime is an independent project. It is not affiliated with, or endorsed by, any league, club or governing body. Competition names are used only to describe what the app covers.</p>
+      <p>&copy; 2026 fulltime</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var clock = document.querySelector('.clock');
+    if (!clock || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var time = clock.querySelector('.clock-time');
+    var label = clock.querySelector('.clock-label');
+    var steps = ["88'", "89'", "90'", "90+1'", "90+2'", "90+3'"];
+    var i = 0;
+    clock.dataset.state = 'live';
+    label.textContent = 'Live';
+    time.textContent = steps[0];
+    var timer = setInterval(function () {
+      i += 1;
+      if (i < steps.length) {
+        time.textContent = steps[i];
+      } else {
+        clearInterval(timer);
+        time.textContent = 'FT';
+        label.textContent = 'Full time';
+        clock.dataset.state = 'ft';
+        clock.setAttribute('data-settled', '');
+      }
+    }, 520);
+  })();
+</script>
+</body>
+</html>
