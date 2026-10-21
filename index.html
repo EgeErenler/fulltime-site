@@ -9,13 +9,14 @@
 <meta property="og:title" content="Scoretime | Live scores for UK sports fans">
 <meta property="og:description" content="Live scores, match stats, line-ups and live tables, with every result back to 1872. Coming to iOS, Android and the web.">
 <meta property="og:url" content="https://scoretime.app/">
-<meta property="og:image" content="https://scoretime.app/img/home.webp">
+<meta property="og:image" content="https://scoretime.app/icon-512.png">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#2a0b3c">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%232a0b3c'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Narrow,Arial,sans-serif' font-weight='900' font-size='34' fill='%23f6d9de'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@800;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #2a0b3c;
@@ -70,11 +71,16 @@
     padding-block: 24px;
   }
   .wordmark {
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-stretch: 100%;
     font-weight: 900;
     font-size: 2rem;
     line-height: 1;
+    letter-spacing: -.035em;
+    color: #fff;
     text-decoration: none;
   }
+  .wordmark .stop { color: #00ff85; }
   .topbar-link { font-weight: 600; text-underline-offset: 4px; }
 
   .hero-grid {
@@ -309,7 +315,7 @@
 <header class="band-ink hero">
   <div class="wrap">
     <div class="topbar">
-      <a class="wordmark" href="#top" id="top">scoretime</a>
+      <a class="wordmark" href="#top" id="top" aria-label="Scoretime">scoretime<span class="stop">.</span></a>
       <a class="topbar-link" href="#contact">Contact</a>
     </div>
 
@@ -338,16 +344,18 @@
       <h2 id="inside">Inside the app</h2>
       <p class="intro">Screens from the current build, with real results.</p>
       <ul class="shots">
-        <li><img src="img/home.webp" alt="Home screen with favourite team bubbles, a date strip, matches from history and today's fixtures" width="640" height="1385" loading="lazy">
+        <li><img src="img/home.webp" alt="Home screen with favourite team bubbles for Fenerbahçe, Arsenal and Real Madrid, a date strip and today's matches" width="640" height="1385" loading="lazy">
           <p><strong>Your teams first</strong>Today's matches, with your clubs at the top.</p></li>
-        <li><img src="img/stats.webp" alt="Match statistics for Lille 2, Galatasaray 4: expected goals, possession, shots and more" width="640" height="1385" loading="lazy">
+        <li><img src="img/stats.webp" alt="Match statistics for Fenerbahçe 2, Slavia Praha 2: expected goals, possession, shots and more" width="640" height="1385" loading="lazy">
           <p><strong>Match stats</strong>xG, possession, shots, corners and cards.</p></li>
-        <li><img src="img/pitch.webp" alt="Galatasaray line-up on a pitch in a 4-2-3-1 formation, with player ratings" width="640" height="1385" loading="lazy">
+        <li><img src="img/pitch.webp" alt="Line-ups on the pitch for Fenerbahçe against Slavia Praha, with player ratings" width="640" height="1385" loading="lazy">
           <p><strong>Line-ups and ratings</strong>Tap a player for his match.</p></li>
-        <li><img src="img/table.webp" alt="Süper Lig 2026/27 table with Galatasaray top" width="640" height="1385" loading="lazy">
-          <p><strong>Live tables</strong>The table moves while games are on.</p></li>
-        <li><img src="img/trip.webp" alt="Away trip map from Istanbul to Konya with distance and travel times" width="640" height="1385" loading="lazy">
+        <li><img src="img/trip.webp" alt="Away trip map from Istanbul to Çorum with distance and travel times" width="640" height="1385" loading="lazy">
           <p><strong>Away trips</strong>Distance and travel time for every away day.</p></li>
+        <li><img src="img/table.webp" alt="Süper Lig 2026/27 table" width="640" height="1385" loading="lazy">
+          <p><strong>Live tables</strong>The table moves while games are on.</p></li>
+        <li><img src="img/team.webp" alt="Fenerbahçe club page with the next matches and the all-time record" width="640" height="1385" loading="lazy">
+          <p><strong>Club pages</strong>Next matches, form and the all-time record.</p></li>
         <li><img src="img/predict.webp" alt="Season predictor with the table and the matches left to play" width="640" height="1385" loading="lazy">
           <p><strong>Predict the season</strong>Pick the scores and see how it ends.</p></li>
       </ul>
