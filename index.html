@@ -4,13 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Scoretime | Live scores for UK sports fans</title>
-<meta name="description" content="Scoretime is a live scores app in development for sports fans in the UK. Football, cricket, tennis and Formula 1 in one place.">
+<meta name="description" content="Scoretime is a live scores app for UK sports fans. Live football scores, match stats, line-ups and live tables, with every result back to 1872. Coming to iOS, Android and the web.">
 <link rel="canonical" href="https://scoretime.app/">
 <meta property="og:title" content="Scoretime | Live scores for UK sports fans">
-<meta property="og:description" content="Football, cricket, tennis and Formula 1 in one app. In development for iOS and Android.">
+<meta property="og:description" content="Live scores, match stats, line-ups and live tables, with every result back to 1872. Coming to iOS, Android and the web.">
+<meta property="og:url" content="https://scoretime.app/">
+<meta property="og:image" content="https://scoretime.app/img/home.webp">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#2a0b3c">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%232a0b3c'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Narrow,Arial,sans-serif' font-weight='900' font-size='34' fill='%23f6d9de'%3EFT%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%232a0b3c'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='Arial Narrow,Arial,sans-serif' font-weight='900' font-size='34' fill='%23f6d9de'%3ES%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
@@ -205,6 +207,42 @@
   .coverage dt { font-weight: 700; }
   .coverage dd { margin: 2px 0 0; }
 
+  /* Screens */
+  .shots {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(220px, 260px);
+    gap: 20px;
+    margin: clamp(32px, 5vw, 56px) calc(var(--gutter) * -1) 0;
+    padding: 0 var(--gutter) 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    list-style: none;
+  }
+  .shots li { scroll-snap-align: start; }
+  .shots img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 22px;
+    border: 3px solid var(--ink);
+    background: var(--ink);
+  }
+  .shots p { margin-top: 12px; font-size: 1rem; }
+  .shots strong { display: block; font-weight: 700; }
+
+  /* Features */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 32px;
+    margin: clamp(32px, 5vw, 56px) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .features li { padding: 20px 0; border-top: 3px solid var(--ink); }
+  .features h3 { margin: 0 0 6px; font-size: 1.25rem; line-height: 1.2; }
+
   /* Progress */
   .steps {
     list-style: none;
@@ -252,6 +290,7 @@
     .clock { justify-self: start; text-align: left; }
     .board li { grid-template-columns: minmax(0, 1fr); }
     .steps { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+    .features { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 520px) {
     .pyramid li { width: calc(var(--w) * .5 + 50%); }
@@ -279,9 +318,8 @@
         <h1>Live scores, all the way to full time.</h1>
         <p class="lede">Scoretime is a live scores app for sports fans in the UK. Football, cricket, tennis and Formula 1, in one place.</p>
         <div class="hero-actions">
-          <!-- REPLACE the address below with your own once the domain is set up -->
-          <a class="btn" href="mailto:hello@your-domain.com">Email us</a>
-          <span class="status">In development for iOS and Android.</span>
+          <a class="btn" href="#screens">See the app</a>
+          <span class="status">Coming to iOS, Android and the web.</span>
         </div>
       </div>
 
@@ -295,14 +333,40 @@
 
 <main>
 
-  <!--
-    SCREENSHOTS: when you have 2 or 3 screenshots of the app, add a section here.
-    Example:
-    <section class="band band-light"><div class="wrap">
-      <h2>Inside the app</h2>
-      <img src="screenshot-1.png" alt="The Scoretime home screen" width="390" height="844">
-    </div></section>
-  -->
+  <section class="band band-light" id="screens" aria-labelledby="inside">
+    <div class="wrap">
+      <h2 id="inside">Inside the app</h2>
+      <p class="intro">Screens from the current build, with real results.</p>
+      <ul class="shots">
+        <li><img src="img/home.webp" alt="Home screen with favourite team bubbles, a date strip, matches from history and today's fixtures" width="640" height="1385" loading="lazy">
+          <p><strong>Your teams first</strong>Today's matches, with your clubs at the top.</p></li>
+        <li><img src="img/stats.webp" alt="Match statistics for Lille 2, Galatasaray 4: expected goals, possession, shots and more" width="640" height="1385" loading="lazy">
+          <p><strong>Match stats</strong>xG, possession, shots, corners and cards.</p></li>
+        <li><img src="img/pitch.webp" alt="Galatasaray line-up on a pitch in a 4-2-3-1 formation, with player ratings" width="640" height="1385" loading="lazy">
+          <p><strong>Line-ups and ratings</strong>Tap a player for his match.</p></li>
+        <li><img src="img/table.webp" alt="Süper Lig 2026/27 table with Galatasaray top" width="640" height="1385" loading="lazy">
+          <p><strong>Live tables</strong>The table moves while games are on.</p></li>
+        <li><img src="img/trip.webp" alt="Away trip map from Istanbul to Konya with distance and travel times" width="640" height="1385" loading="lazy">
+          <p><strong>Away trips</strong>Distance and travel time for every away day.</p></li>
+        <li><img src="img/predict.webp" alt="Season predictor with the table and the matches left to play" width="640" height="1385" loading="lazy">
+          <p><strong>Predict the season</strong>Pick the scores and see how it ends.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="what">
+    <div class="wrap">
+      <h2 id="what">What it does</h2>
+      <ul class="features">
+        <li><h3>Live scores</h3><p>Scores and minutes from Europe's top leagues, the Süper Lig and the Champions League, updated while the games are on.</p></li>
+        <li><h3>Match centre</h3><p>Stats, line-ups, formations, player ratings and every goal, card and substitution.</p></li>
+        <li><h3>Your club, your way</h3><p>Pick your club once. Its colours, form and next match follow you around the app.</p></li>
+        <li><h3>On this day</h3><p>The biggest matches ever played on today's date, told as stories you tap through.</p></li>
+        <li><h3>150 years of results</h3><p>More than half a million matches, from the first international in 1872 to last night.</p></li>
+        <li><h3>Search that knows fans</h3><p>Find clubs by nickname or old name: PSG, Spurs, Small Heath, Woolwich Arsenal.</p></li>
+      </ul>
+    </div>
+  </section>
 
   <section class="band" aria-labelledby="sports">
     <div class="wrap">
@@ -313,7 +377,7 @@
         <li class="own">
           <span class="sport">Football</span>
           <span class="term">Goals</span>
-          <span class="gloss">Live scores, line-ups, match stats and tables, from the Premier League to League Two, plus the FA Cup.</span>
+          <span class="gloss">Live scores, match stats, line-ups and live tables, from the Premier League to League Two and across Europe.</span>
         </li>
         <li>
           <span class="sport">Cricket</span>
@@ -337,7 +401,7 @@
   <section class="band band-light" aria-labelledby="football">
     <div class="wrap">
       <h2 id="football">Football, all the way down the pyramid.</h2>
-      <p class="intro">Football is the heart of Scoretime. We are building it to follow every level of the English game, not only the top.</p>
+      <p class="intro">Football is the heart of Scoretime. It follows all four divisions of the English Football League, and the leagues UK fans watch most.</p>
 
       <div class="football-grid">
         <ol class="pyramid" aria-label="Levels of English football covered">
@@ -345,26 +409,25 @@
           <li style="--w:62%"><span class="tier">2</span><span>Championship</span></li>
           <li style="--w:72%"><span class="tier">3</span><span>League One</span></li>
           <li style="--w:82%"><span class="tier">4</span><span>League Two</span></li>
-          <li style="--w:92%"><span class="tier">5</span><span>National League</span></li>
-          <li style="--w:100%" class="below"><span class="tier">6+</span><span>National League North and South, and the regional leagues below</span></li>
+          <li style="--w:100%" class="below"><span class="tier">Cups</span><span>FA Cup and EFL Cup</span></li>
         </ol>
 
         <dl class="coverage">
           <div>
-            <dt>Women's Super League</dt>
-            <dd>The top level of women's football in England.</dd>
+            <dt>Europe's top leagues</dt>
+            <dd>La Liga, Bundesliga, Serie A, Ligue 1, Eredivisie, Primeira Liga, the Süper Lig and the Scottish Premiership.</dd>
           </div>
           <div>
-            <dt>Top divisions around the world</dt>
-            <dd>The first division of every footballing country.</dd>
+            <dt>European nights</dt>
+            <dd>The Champions League, the Europa League and the Conference League.</dd>
           </div>
           <div>
             <dt>National teams</dt>
-            <dd>The major international tournaments.</dd>
+            <dd>Every international on record since 1872, with the World Cup and the Euros.</dd>
           </div>
           <div>
             <dt>Club history</dt>
-            <dd>Results, league finishes, goals and players, back to the season each club was founded.</dd>
+            <dd>Results and league tables back to 1888, with scorers, cards and line-ups where the record has them.</dd>
           </div>
         </dl>
       </div>
@@ -377,15 +440,15 @@
       <ol class="steps">
         <li class="current">
           <div class="when"><span class="dot"></span>Now</div>
-          <p>Design and core screens. The app runs in test builds on iOS and Android and shows real past results.</p>
+          <p>The app works end to end on iPhone, Android and the web, with live scores, match stats, line-ups and live tables.</p>
         </li>
         <li>
           <div class="when">Next</div>
-          <p>Live data. Scores, tables and fixtures that update in real time.</p>
+          <p>A public beta in the UK, and Scoretime in your browser at scoretime.app.</p>
         </li>
         <li>
           <div class="when">Later</div>
-          <p>Public release in the UK.</p>
+          <p>Release on the App Store and Google Play.</p>
         </li>
       </ol>
     </div>
@@ -397,8 +460,7 @@
   <div class="wrap">
     <h2>Get in touch</h2>
     <p class="intro">Questions, feedback or ideas for working together? Write to us.</p>
-    <!-- REPLACE the address below (both the link and the text) with your own -->
-    <a class="mail" href="mailto:hello@your-domain.com">hello@your-domain.com</a>
+    <a class="mail" href="mailto:hello@scoretime.app">hello@scoretime.app</a>
 
     <div class="small">
       <p>Scoretime is an independent project. It is not affiliated with, or endorsed by, any league, club or governing body. Competition names are used only to describe what the app covers.</p>
